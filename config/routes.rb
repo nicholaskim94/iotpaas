@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
-post '/api/v1/projects/:name/' => 'projects_api#create'
+  resources :projects
+	# Data requests
+	post '/api/v1/projects/:name/' => 'data_api#create'
 
+	root :to => "projects#index"
 end
