@@ -1,2 +1,3 @@
 LuaLoader	https://github.com/GeoNomad/LuaLoader : MIT LICENSE
 nodemcu-flasher	https://github.com/nodemcu/nodemcu-flasher : MIT License
+nodemcu-firmware	https://github.com/nodemcu/nodemcu-firmware : MIT License
