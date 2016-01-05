@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   :recoverable, :rememberable, :trackable, :validatable
 
   before_create :generate_access_token
-
+  has_many :projects
   private
 
   def generate_access_token
