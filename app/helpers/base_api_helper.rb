@@ -1,0 +1,2 @@
+module BaseApiHelper
+end
