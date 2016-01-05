@@ -12,6 +12,7 @@ class BaseApiController < ApplicationController
 		else
 			@user = nil
 			User.find_each{ |u| @user = u if Devise.secure_compare(u.access_token, @json['access_token']) }
+			render nothing: true, status: :unauthorized if @user.nil?
 		end
 	end
 end

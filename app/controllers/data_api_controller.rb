@@ -22,7 +22,6 @@ class DataApiController < BaseApiController
 	private
 	def find_project
 		@project = Project.find_by_name(params[:projectName])
-		render nothing: true, status: :not_found unless @project.present?
-		# @project.user == @user
+		render nothing: true, status: :not_found unless @project.present? && @project.user == @user
 	end
 end
