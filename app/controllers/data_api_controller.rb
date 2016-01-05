@@ -1,16 +1,17 @@
 class DataApiController < BaseApiController
 	before_filter :find_project, only: [:create]
+	respond_to :json
 
 	def create
 		@data = Datum.create(
-				sensorModel: @json['sensorModel'],
-				sensorType: @json['sensorType'],
-				unit: @json['unit'],
-				time: @json['time'],
-				value: @json['value'],
-				lat: @json['lat'],
-				lng: @json['lng'],
-				project_id: @project.id)
+			sensorModel: @json['sensorModel'],
+			sensorType: @json['sensorType'],
+			unit: @json['unit'],
+			time: @json['time'],
+			value: @json['value'],
+			lat: @json['lat'],
+			lng: @json['lng'],
+			project_id: @project.id)
 		if @data.save
 			render json: @data
 		else

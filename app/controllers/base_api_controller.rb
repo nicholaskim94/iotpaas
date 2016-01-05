@@ -3,16 +3,15 @@ class BaseApiController < ApplicationController
 
 	def parse_request
 		@json = JSON.parse(request.body.read)
-
 	end
 
 	private
 	def authenticate_user_from_token!
-		# if !@json['api_token']
-		# 	render nothing: true, status: :unauthorized
-		# else
-		# 	@user = nil
-		# 	User.find_each{ |u| @user = u if Devise.secure_compare(u.api_token, @json['api_token']) }
-		# end
+		if !@json['access_token']
+			render nothing: true, status: :unauthorized
+		else
+			@user = nil
+			User.find_each{ |u| @user = u if Devise.secure_compare(u.access_token, @json['access_token']) }
+		end
 	end
 end
