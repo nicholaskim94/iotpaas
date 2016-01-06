@@ -34,25 +34,29 @@ rails server
 
 ### esp8266 library
 
-wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif. In esp8266 library folder both lua for nodemcu firmware and c project with espressif sdk is porvided. (Currently, only lua library is updated)
+wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif.
+In esp8266 library folder both Lua for nodemcu firmware and c project with espressif sdk is porvided. (Currently, only Lua library is updated)
 
-## lua library composition
-In lua library, all the modules to run this project is uploaded. Modules are already connected, thus, as soon as they are uploaded, it will work fine. However, due to nodemcu memory problem we will upload both optimzed lua code and lua compiled chunk on optimzed folder which will be used in our sample device. To solve memory shortage problem, lua code will be written with less legibilty.
+## Lua library composition
+In Lua library, all the modules to run this project is uploaded. Modules are already connected, thus, as soon as they are uploaded, it will work fine.
+However, due to nodemcu memory problem we will upload both optimzed Lua code and Lua compiled chunk on optimzed folder which will be used in our sample device. 
+To solve memory shortage problem, Lua code will be written with less legibilty.
 
 ## versions
 nodmcu firmware: float_0.9.6
 
-lua: 5.1.4
+Lua: 5.1.4
 
 espressif sdk: 1.5.0
 
 
-## modules in lua library
+## modules in Lua library
 
 >init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
 >connectwifi.lua - connect with AP
 >request.lua - send POST, GET request to server with TCP/IP socket
->datatoserver.lua - bring data from sensors and pass them to reuqest.lua to send it to serever. url, data information, request type should be set
+>datatoserver.lua - bring data from sensors and pass them to reuqest.lua to send it to serever. 
+>					url, data information, request type should be set
 >initialization.lua - bring time and location infromation to nodemcu
 
 ## API
