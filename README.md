@@ -32,6 +32,9 @@ rails server
 
 ### Client Side
 
+####esp8266 library
+wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif. In esp8266 library folder both lua for nodemcu firmware and c project with espressif sdk is porvided. (Currently, only lua library is updated)
+
 ## API
 
 현재 API endpoint 는 Device Client 가 있습니다
