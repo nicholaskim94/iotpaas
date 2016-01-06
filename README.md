@@ -41,15 +41,20 @@ In lua library, all the modules to run this project is uploaded. Modules are alr
 
 ## versions
 nodmcu firmware: float_0.9.6
+
 lua: 5.1.4
+
 espressif sdk: 1.5.0
 
+
 ## modules in lua library
-init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua.
-connectwifi.lua - connect with AP.
-request.lua - send POST, GET request to server with TCP/IP socket.
-datatoserver.lua - bring data from sensors and pass them to reuqest.lua to send it to serever. url, data information, request type should be set.
-initialization.lua - bring time and location infromation to nodemcu.
+```
+init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
+connectwifi.lua - connect with AP
+request.lua - send POST, GET request to server with TCP/IP socket
+datatoserver.lua - bring data from sensors and pass them to reuqest.lua to send it to serever. url, data information, request type should be set
+initialization.lua - bring time and location infromation to nodemcu
+```
 
 ## API
 
