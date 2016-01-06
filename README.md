@@ -15,6 +15,8 @@ IoT를 위한 PaaS(Platform as Service)
 
 [소개영상](https://youtu.be/dSnTijeqJ2s)
 
+[슬라이드](https://www.slideshare.net/secret/97yiFrM0AWUhUb)
+
 ## 실행방법
 
 ### Server Side
