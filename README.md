@@ -43,25 +43,22 @@ In esp8266 library folder both Lua for nodemcu firmware and c project with espre
 
 ### Lua library composition
 In Lua library, all the modules to run this project is uploaded. Modules are already connected, thus, as soon as they are uploaded, it will work fine.
-However, due to nodemcu memory problem we will upload both optimzed Lua code and Lua compiled chunk on optimzed folder which will be used in our sample device. 
+However, due to nodemcu memory problem we will upload both optimzed Lua code and Lua compiled chunk on optimzed folder which will be used in our sample device.
 To solve memory shortage problem, Lua code will be written with less legibilty.
 
-### versions
-nodmcu firmware: float_0.9.6
-
-Lua: 5.1.4
-
-espressif sdk: 1.5.0
+### Versions
+- Nodmcu firmware: float_0.9.6
+- Lua: 5.1.4
+- Espressif sdk: 1.5.0
 
 
 ### modules in Lua library
 
-/ init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
-/ connectwifi.lua - Connect with AP
-/ request.lua - Send POST, GET request to server with TCP/IP socket
-/ datatoserver.lua - Bring data from sensors and pass them to reuqest.lua to send it to serever. 
-/  			   		 Url, data information, request type should be set
-/ initialization.lua - Bring time and location infromation to nodemcu.
+- init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
+- connectwifi.lua - Connect with AP
+- request.lua - Send POST, GET request to server with TCP/IP socket
+- datatoserver.lua - Bring data from sensors and pass them to reuqest.lua to send it to server.Url, data information, request type should be set
+- initialization.lua - Bring time and location infromation to nodemcu.
 
 ## API
 
@@ -126,7 +123,7 @@ Nodemcu 펌웨어에서 돌아갈 LUA 언어를 기반으로한 라이브러리�
 현재는 하드웨어 모듈의 인터넷 연결이 잠시 끊어지면 그 시간 동안의 데이터는 유실되지만 인터넷 연결이 끊긴 동안은 데이터를 지정된 시간마다 flash에 저장하다 다시 인터넷에 연결되면 데이터를 로드하여 보내는 기능을 추가할 것입니다.
 
 ### 회로 구성 및 시연
-현재는 앞으로 만들 설계된 회로에 대해 데이터를 수집하여 POST 형식으로 json으로 파싱된 데이터를 발신하여 주는 것까지 구현되어 있습니다. 
+현재는 앞으로 만들 설계된 회로에 대해 데이터를 수집하여 POST 형식으로 json으로 파싱된 데이터를 발신하여 주는 것까지 구현되어 있습니다.
 
 ESP8266에 탈부착 가능한 쉴드를 만들고 이를 몇 장소에 설치하여 데이터 수집을 시연하고 이에 대한 동영상/사진 메뉴얼을 만들어 업로드할 예정입니다.
 
