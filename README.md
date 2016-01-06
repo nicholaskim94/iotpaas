@@ -71,7 +71,7 @@ MIT License. Copyright 2016 Seung Ju Kim, Dong Jae Kim
 
 ## 주요 스크린샷
 ### POST REQUEST
-![](http://i.imgur.com/Vn7nGV0.png)
+![](http://i.imgur.com/uAePIdQ.png))
 
 ### 웹서비스
 ![](http://i.imgur.com/Z6fpqiq.png)
