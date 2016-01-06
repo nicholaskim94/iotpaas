@@ -1,7 +1,7 @@
 IoT를 위한 PaaS(Platform as Service)
 =======
 
-[소개영상]https://youtu.be/dSnTijeqJ2s
+[소개영상](https://youtu.be/dSnTijeqJ2s)
 
 이 프로젝트는 하드웨어 개발자들을 위한 IoT 환경에서 빠른 개발을 도와주는 Platform as Service 입니다.
 
