@@ -1,3 +1,8 @@
 LuaLoader	https://github.com/GeoNomad/LuaLoader : MIT LICENSE
 nodemcu-flasher	https://github.com/nodemcu/nodemcu-flasher : MIT License
 nodemcu-firmware	https://github.com/nodemcu/nodemcu-firmware : MIT License
+devise		https://github.com/plataformatec/devise : MIT License
+ruby-pg		https://github.com/ged/ruby-pg : Yukihiro Matsumoto License
+Rails 12factor	https://github.com/heroku/rails_12factor : MIT License
+bootstrap	http://getbootstrap.com/ : MIT License
+Rails		https://github.com/rails/rails : MIT License
