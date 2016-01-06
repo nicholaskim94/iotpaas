@@ -34,7 +34,7 @@ rails server
 
 ### esp8266 library
 
-wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif.
+Wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif.
 In esp8266 library folder both Lua for nodemcu firmware and c project with espressif sdk is porvided. (Currently, only Lua library is updated)
 
 ## Lua library composition
@@ -53,11 +53,11 @@ espressif sdk: 1.5.0
 ## modules in Lua library
 
 >init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
->connectwifi.lua - connect with AP
->request.lua - send POST, GET request to server with TCP/IP socket
->datatoserver.lua - bring data from sensors and pass them to reuqest.lua to send it to serever. 
->					url, data information, request type should be set
->initialization.lua - bring time and location infromation to nodemcu
+>connectwifi.lua - Connect with AP
+>request.lua - Send POST, GET request to server with TCP/IP socket
+>datatoserver.lua - Bring data from sensors and pass them to reuqest.lua to send it to serever. 
+>					Url, data information, request type should be set
+>initialization.lua - Bring time and location infromation to nodemcu.
 
 ## API
 
