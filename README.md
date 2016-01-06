@@ -13,7 +13,7 @@ IoT를 위한 PaaS(Platform as Service)
 
 [데모](http://tranquil-sands-4879.herokuapp.com)
 
-## 실헹방법
+## 실행방법
 
 ### Server Side
 
