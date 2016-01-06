@@ -1,3 +1,0 @@
-HT01SV_20140811.pdf	manufacturer:econarae	datasheet from: http://www.econarae.com/
-NODEMCU_DEVKIT_SCH.png	manufacturer:nodemcu	schematic from: https://github.com/nodemcu/nodemcu-firmware
-74HC4051		manufacturer:any vendor	datasheet from: http://www.nxp.com/documents/data_sheet/74HC_HCT4051.pdf
