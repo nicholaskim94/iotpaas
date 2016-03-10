@@ -1,29 +1,66 @@
---set 8channel mux as output
-mux1, mux2, mux3 = 1, 2, 3
-gpio.mode(mux1, gpio.OUTPUT)
-gpio.mode(mux2, gpio.OUTPUT)
-gpio.mode(mux3, gpio.OUTPUT)
-
-tmr.alarm(1, 10000, 1, function() --set interval to upload data, unit:ms
-if WIFI.STA.GETIP() != nil then
-	for i=0, 7 --number of mux on adc port
-	if i%2 != 0 then gpio.write(mux1, gpio.HIGH) else gpio.write(mux1, gpio.LOW) end
-	if i%4 > 1 then gpio.write(mux2, gpio.HIGH) else gpio.write(mux2, gpio.LOW) end
-	if i>3 then gpio.write(mux3, gpio.HIGH) else gpio.write(mux3, gpio.LOW) end
-	adc.read(0)
-	data = {
-    "projectName": "TestApp",
-    "sensorModel": "TI000001",
-    "sensorType": "Thermal",
-    "unit": "Celcius",
-    "time": "2016-01-05",
-    "value": 19,
-    "lat": 0,
-    "lng": 0
-	}
+--set 8channel Mux as output
+gpio.mode(Mux1, gpio.OUTPUT)
+gpio.mode(Mux2, gpio.OUTPUT)
+gpio.mode(Mux3, gpio.OUTPUT)
+local Request = assert(loadfile("Request.lua"), "Loading Request.lua failed")
+local TempHumSensor = assert(loadfile("TempHumSensor.lua"), "Loading Request.lua failed")
+require "GetTime"
+Data = DataContainer
+Time = nil
+--set lag and lan here
+function split(pString, pPattern)
+   local Table = {} 
+   local fpat = "(.-)" .. pPattern
+   local last_end = 1
+   local s, e, cap = pString:find(fpat, 1)
+   while s do
+      if s ~= 1 or cap ~= "" then
+	  table.insert(Table,cap)
+      end
+      last_end = e+1
+      s, e, cap = pString:find(fpat, last_end)
+   end
+   if last_end <= #pString then
+      cap = pString:sub(last_end)
+      table.insert(Table, cap)
+   end
+   return Table
+end
+tmr.alarm(1, 1000, 1, function()
+	Time = GetTime.GetTime()
+end)
+tmr.alarm(1, 10000, 1, function()
+	for i = 0, 7 do--number of Mux on adc port
+	if i % 2 ~= 0 then gpio.write(Mux1, gpio.HIGH) else gpio.write(Mux1, gpio.LOW) end
+	if i % 4 > 1 then gpio.write(Mux2, gpio.HIGH) else gpio.write(Mux2, gpio.LOW) end
+	if i > 3 then gpio.write(Mux3, gpio.HIGH) else gpio.write(Mux3, gpio.LOW) end
+	--put your code here
+	if i == 0 then pcall(TempHumSensor) end
+	file.open("data.txt", "a+")
+	file.writeline(Time..",TQWQR1"..",TEMP"..",Cellcius,".."0")
+	--file.flush()
+	print("Sensor Information Added")
+	file.close()
 	end
-else
+end)
+tmr.alarm(2, 10000, 1, function()
+	file.open("data.txt", "r")
+	file.seek("set")
+	local Line = file.readline()
+	--print (Line)
+	while Line do
+		data["time"],data["sensorModel"],data["sensorType"],data["unit"],data["value"] = split(Line, ",")
+		if wifi.sta.getip() ~= nil then
+			print (data)
+			pcall (Request, Data)
+			Line = file.readline()
+		else
+			print("Internet Connection Lost")
+			break
+		end
+	end
+	--file.wirte(file.read())
+	file.close()
+end)
 
-end
-end
-dofile("init.lua")
+--dofile("init.lua")
