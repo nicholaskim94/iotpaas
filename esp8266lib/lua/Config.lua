@@ -6,8 +6,13 @@ Host = "NodeMCU01"  -- set Host																				Needed
 Url = "" -- set server Url without http://																	Needed
 IP = ""
 ReqType = "POST"
-Location = nil
-Mux1, Mux2, Mux3 = 1, 2, 3 --muxpin setting																	Needed
+Location = nil,
+MuxSelPinArray = {16, 5, 4} --muxpin setting	16,5,4 for sel pin											Needed
+MuxEnablePin = 0 --muxpin enable pin setting																Needed
+if (MuxEnablePin)
+	gpio.mode(MuxEnablePin, gpio.OUTPUT)
+	gpio.write(MuxEnablePin, gpio.LOW)
+end
 NumberOfData = 3 -- numbers to collect data from mux or serial communication								Needed
 DataModuleArray = {"TempSensor", "HumiditySensor", "GasSensor"}
 Header = "Host: "..Host.."\r\n"..

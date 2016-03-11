@@ -3,8 +3,6 @@ gpio.mode(Mux1, gpio.OUTPUT)
 gpio.mode(Mux2, gpio.OUTPUT)
 gpio.mode(Mux3, gpio.OUTPUT)
 local Request = assert(loadfile("Request.lua"), "Loading Request.lua failed")
-require "GetTime"
-Time = nil
 --set lag and lan here
 function split(pString, pPattern)
    local Table = {} 
@@ -24,10 +22,7 @@ function split(pString, pPattern)
    end
    return Table
 end
-tmr.alarm(1, 1000, 1, function()
-	Time = GetTime.GetTime()
-end)
-tmr.alarm(1, 10000, 1, function()
+tmr.alarm(0, 10000, 1, function()
 	for i = 0, 7 do--number of Mux on adc port
 	if i % 2 ~= 0 then gpio.write(Mux1, gpio.HIGH) else gpio.write(Mux1, gpio.LOW) end
 	if i % 4 > 1 then gpio.write(Mux2, gpio.HIGH) else gpio.write(Mux2, gpio.LOW) end
@@ -41,11 +36,11 @@ tmr.alarm(1, 10000, 1, function()
 	file.close()
 	end
 end)
-tmr.alarm(2, 10000, 1, function()
+tmr.alarm(1, 10000, 1, function()
 	file.open("data.txt", "r")
 	file.seek("set")
 	local Line = file.readline()
-	--print (Line)
+	print (Line)
 	while Line do
 		data["time"],data["sensorModel"],data["sensorType"],data["unit"],data["value"] = split(Line, ",")
 		if wifi.sta.getip() ~= nil then
@@ -57,8 +52,6 @@ tmr.alarm(2, 10000, 1, function()
 			break
 		end
 	end
-	--file.wirte(file.read())
+	file.wirte(file.read())
 	file.close()
 end)
-
---dofile("init.lua")
