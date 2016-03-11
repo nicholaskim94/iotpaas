@@ -1,7 +1,4 @@
 --set 8channel Mux as output
-gpio.mode(Mux1, gpio.OUTPUT)
-gpio.mode(Mux2, gpio.OUTPUT)
-gpio.mode(Mux3, gpio.OUTPUT)
 local Request = assert(loadfile("Request.lua"), "Loading Request.lua failed")
 --set lag and lan here
 function split(pString, pPattern)
@@ -22,36 +19,32 @@ function split(pString, pPattern)
    end
    return Table
 end
-tmr.alarm(0, 10000, 1, function()
-	for i = 0, 7 do--number of Mux on adc port
-	if i % 2 ~= 0 then gpio.write(Mux1, gpio.HIGH) else gpio.write(Mux1, gpio.LOW) end
-	if i % 4 > 1 then gpio.write(Mux2, gpio.HIGH) else gpio.write(Mux2, gpio.LOW) end
-	if i > 3 then gpio.write(Mux3, gpio.HIGH) else gpio.write(Mux3, gpio.LOW) end
-	--put your code here
-	if i == 0 then pcall(TempHumSensor) end
-	file.open("data.txt", "a+")
-	file.writeline(Time..",TQWQR1"..",TEMP"..",Cellcius,".."0")
-	--file.flush()
-	print("Sensor Information Added")
-	file.close()
+tmr.alarm(0, UploadInterval, 1, function()
+	dofile ("GetTimeToMux.lua")
+	local tmp
+	if (file.open("data.txt", "w"))	then
+		file.seek("set")
+		local Line = file.readline()
+	else
+		Line = false
 	end
-end)
-tmr.alarm(1, 10000, 1, function()
-	file.open("data.txt", "r")
-	file.seek("set")
-	local Line = file.readline()
-	print (Line)
 	while Line do
-		data["time"],data["sensorModel"],data["sensorType"],data["unit"],data["value"] = split(Line, ",")
+		print ("Line Readed From data.txt: "..Line)
+		DataContainer["time"],DataContainer["sensorModel"],DataContainer["sensorType"],DataContainer["unit"],DataContainer["value"] = split(Line, ",")
 		if wifi.sta.getip() ~= nil then
-			print (data)
-			pcall (Request, DataContainer)
+			print (DataContainer)
+			pcall (Request, DataContainerContainer)
 			Line = file.readline()
 		else
 			print("Internet Connection Lost")
 			break
 		end
 	end
-	file.wirte(file.read())
+	tmp = file.read()
+	if (tmp) then
+		file.wirte(tmp)
+	else
+		file.remove("data.txt")
+	end
 	file.close()
 end)

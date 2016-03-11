@@ -12,10 +12,13 @@ conn:on("receive", function(conn, payload)
 	print ("Time: "..Time)
 	conn:close()
     for i = 1, NumberOfData do
-    	require DataModuleArray[i-1]
+    	local Module = require (DataModuleArray[i])
+    	local Value = Module.GetValue()
+    	print ("Loaded Module: "..DataModuleArray[i])
     	--local Module = assert(loadfile(DataModuleArray[i]), "Loading "..DataModuleArray[i].." failed")
     	file.open("data.txt", "a+")
-		file.writeline(Time..","..SensorModel..","..SensorType..","..Unit..","..GetValue()..)
+		file.writeline(Time..","..Module.SensorModel()..","..Module.SensorType()..","..Module.Unit()..","..Value)
+		print ("value: "..Value)
     end
 	file.seek("set")
 	print (file.read())
