@@ -3,9 +3,7 @@ gpio.mode(Mux1, gpio.OUTPUT)
 gpio.mode(Mux2, gpio.OUTPUT)
 gpio.mode(Mux3, gpio.OUTPUT)
 local Request = assert(loadfile("Request.lua"), "Loading Request.lua failed")
-local TempHumSensor = assert(loadfile("TempHumSensor.lua"), "Loading Request.lua failed")
 require "GetTime"
-Data = DataContainer
 Time = nil
 --set lag and lan here
 function split(pString, pPattern)
@@ -52,7 +50,7 @@ tmr.alarm(2, 10000, 1, function()
 		data["time"],data["sensorModel"],data["sensorType"],data["unit"],data["value"] = split(Line, ",")
 		if wifi.sta.getip() ~= nil then
 			print (data)
-			pcall (Request, Data)
+			pcall (Request, DataContainer)
 			Line = file.readline()
 		else
 			print("Internet Connection Lost")
