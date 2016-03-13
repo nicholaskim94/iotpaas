@@ -1,7 +1,7 @@
 local gpio = gpio
 local adc = adc
 local MuxSelPinArray = MuxSelPinArray
-module('TempSensor')
+module('GSAT11-GasSensor')
 function SensorModel() return "GSAT11" end
 function SensorType() return "Gas" end
 function Unit() return "ppm" end

@@ -38,27 +38,98 @@ rails server
 
 ## esp8266 library
 
-Wifi chip esp8266 can be used with nodemcu firmware or sdk provided by espressif.
-In esp8266 library folder both Lua for nodemcu firmware and c project with espressif sdk is porvided. (Currently, only Lua library is updated)
-
-### Lua library composition
-In Lua library, all the modules to run this project is uploaded. Modules are already connected, thus, as soon as they are uploaded, it will work fine.
-However, due to nodemcu memory problem we will upload both optimzed Lua code and Lua compiled chunk on optimzed folder which will be used in our sample device.
-To solve memory shortage problem, Lua code will be written with less legibilty.
+ESP8266라이브러리에 있는 루아 코드들은 기본적으로 Nodemcu 펌웨어 위에서 동작하는 코드들입니다.
+Nodemcu 펌웨어는 nodemcu-flasher를 이용하여 업로드 하였고 루아 코드들은 Lua Loader를 이용하여 올려서 사용한 코드들입니다.
+config.lua 파일에 설정사항을 입력하고 센서 모듈과 라이브러리를 올리게 되면 esp8266 mcu는 지정된 시간 마다 센서의 시간을 읽어와 서버에 POST 또는 GET 방식으로 리퀘스트를 전송합니다.
+이 프로젝트에 사용된 주요 툴의 버전은 아래와 같습니다.
 
 ### Versions
 - Nodmcu firmware: float_0.9.6
 - Lua: 5.1.4
-- Espressif sdk: 1.5.0
+- Lua Loader: 0.87
 
 
-### modules in Lua library
+### Config 설정
 
-- init.lua - SSID and password of AP should be written on init.lua. It passses AP information to connectwifi.lua
-- connectwifi.lua - Connect with AP
-- request.lua - Send POST, GET request to server with TCP/IP socket
-- datatoserver.lua - Bring data from sensors and pass them to reuqest.lua to send it to server.Url, data information, request type should be set
-- initialization.lua - Bring time and location infromation to nodemcu.
+```
+SSID = "SSID" --Put Your Wifi SSID on Here!
+Pass = "PASSWORD" --Put Your Wifi Password on Here!
+TimeOut = 10000 --Connection Closed after Timor, Put Nil to Run 'connect_wifi.lua' until Wifi Connected!
+Host = node.chipid()  -- set Host
+IP = "" -- set your IP
+Path = "/post"
+```
+SSID 와 Pass는 모듈이 접속할 근처의 AP의 SSID와 비밀번호를 입력하면 됩니다.
+가끔 ESP8266이 주변의 AP에 계속 접속하지 못하고 무한 접속시도만 반복하는 경우가 있습니다.
+TimeOut은 이를 방지하기 위해 있는 것으로 AP에 TimeOut에 적힌 시간만큼 연결되지 않으면 모듈을 재부팅합니다.
+HOST는 리퀘스트에 전송될 HOST명으로 node.chipid()이란 함수로 esp8266이 부여받은 고유의 아이디를 불러와 사용하고 있습니다.
+고유의 네이밍을 기법을 보유하시고 있다면 변경하시면 됩니다.
+IP와 Path는 연결된 서버의 IP와 서버내 리소스의 Path 입니다.
+예를 들어 http://d2campusfest.kr/2015/ 가 접속하고자 하는 url이면 
+IP와 Path는 각각 d2campusfest.kr의 ip와 /2015 가 됩니다.
+```
+ReqType = "POST"
+UploadInterval = 10000 -- Unit: ms
+MuxSelPinArray = {0, 1, 2} --muxpin setting	0, 1, 2 for sel pin
+MuxEnablePin = 3 --muxpin enable pin setting
+if (MuxEnablePin) then
+	gpio.mode(MuxEnablePin, gpio.OUTPUT)
+	gpio.write(MuxEnablePin, gpio.LOW)
+end
+DataModuleArray = {"HT01SV-TempSensor"}
+Header = "Host: "..Host.."\r\n"..
+		"Authorization: \r\n"..
+		"Content-Type: application/json\r\n"
+DataContainer = {
+    ["projectName"] = "hi",
+    ["sensorModel"] = "TI000001",
+    ["sensorType"]= "Thermal",
+    ["unit"] = "Celcius",
+    ["time"] = "",
+    ["value"] = 110,
+    ["lat"] = 0,
+    ["lng"] = 0,
+	["access_token"] = "16586e3d75a12ea0c560ed5045ee9af1" -- put your access_token
+}
+
+```
+위 부분에서는 전송할 리퀘스트의 타입과 정송될 정보의 주기를 ReqType과 UploadInterval 변수를 통해 설정할 수 있습니다.
+ESP8266에는 ADC 핀이 하나밖에 없습니다. 복수의 ADC 센서를 이용하려면 MUX를 사용하여야 하고 MuxSelPinArray와 MuxEnablePin 이에 대한 설정입니다.
+단일 ADC 센서만 사용하신다면 설정하실 필요는 없습니다.
+
+DataModuleArray에는 각 센서로 부터 데이터를 추출하는 모듈을 입력하시면 됩니다.
+Header는 리퀘스트에 전송될 헤더이고
+DataContainer 를 통해 전송될 데이터의 파라미터를 정할 수 있습니다. 위도 경도 정보 lat과 lng는 모듈이 설치될 위치의 좌표를 입력하시면 됩니다.
+
+코드는 매 주기마다 DataModuleArray에 있는 모듈들을 실행합니다. 즉, 사용하는 센서의 종류만큼 모듈을 추가해 주고 모듈의 이름을 어레이에 입력하시면 됩니다.
+
+### 모듈 예제
+
+```
+--Volatage input 3.3V
+local gpio = gpio
+local adc = adc
+local MuxSelPinArray = MuxSelPinArray
+module('HT01SV-TempSensor')
+function SensorModel() return "HT01SV" end
+function SensorType() return "TEMP" end
+function Unit() return "Cellcius" end
+function GetValue()
+	gpio.mode(MuxSelPinArray[1], gpio.OUTPUT)
+	gpio.mode(MuxSelPinArray[2], gpio.OUTPUT)
+	gpio.mode(MuxSelPinArray[3], gpio.OUTPUT)
+	gpio.write(MuxSelPinArray[1], gpio.LOW)
+	gpio.write(MuxSelPinArray[2], gpio.LOW)
+	gpio.write(MuxSelPinArray[3], gpio.LOW)
+	return (adc.read(0)*165/3.3 - 40)
+end
+
+```
+
+라이브러리의 코드는 모듈로 부터 정보들을 불러옵니다. 즉 모듈에는 예제모듈에 있는 5가지의 함수가 있어야 합니다.
+모듈 코드를 작성합에 있어서 파일명과 module('')에 들어갈 이름과 어레이에 들어갈 이름이 같도록 하면 됩니다.
+GetValue 함수는 본격적으로 센서로 부터 값을 읽어오는 부분입니다. 모듈 내에서는 글로벌 변수 또는 함수를 사용할 수 없으므로
+사용할 글로벌 변수 및 함수는 위에 예제처럼 ex) local gpio = gpio 지역변수에 주소를 저장해 두었다 사용하면 됩니다.
 
 ## API
 

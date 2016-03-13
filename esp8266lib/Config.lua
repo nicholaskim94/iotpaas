@@ -13,8 +13,7 @@ if (MuxEnablePin) then
 	gpio.mode(MuxEnablePin, gpio.OUTPUT)
 	gpio.write(MuxEnablePin, gpio.LOW)
 end
-NumberOfData = 1 -- numbers to collect data from mux or serial communication
-DataModuleArray = {"TempSensor", "HumiditySensor", "GasSensor"}
+DataModuleArray = {"HT01SV-TempSensor"}
 Header = "Host: "..Host.."\r\n"..
 		"Authorization: \r\n"..
 		"Content-Type: application/json\r\n"

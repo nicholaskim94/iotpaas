@@ -2,7 +2,7 @@
 local gpio = gpio
 local adc = adc
 local MuxSelPinArray = MuxSelPinArray
-module('TempSensor')
+module('ETH-01DV-HumiditySensor')
 function SensorModel() return "ETH-01DV" end
 function SensorType() return "Humidity" end
 function Unit() return "%RH" end

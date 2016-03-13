@@ -2,7 +2,7 @@
 local gpio = gpio
 local adc = adc
 local MuxSelPinArray = MuxSelPinArray
-module('TempSensor')
+module('HT01SV-TempSensor')
 function SensorModel() return "HT01SV" end
 function SensorType() return "TEMP" end
 function Unit() return "Cellcius" end

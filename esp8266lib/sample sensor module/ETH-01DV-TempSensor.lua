@@ -2,7 +2,7 @@
 local gpio = gpio
 local adc = adc
 local MuxSelPinArray = MuxSelPinArray
-module('TempSensor')
+module('ETH-01DV-TempSensor')
 function SensorModel() return "ETH-01DV" end
 function SensorType() return "Temperature" end
 function Unit() return "Cellcius" end

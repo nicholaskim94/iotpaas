@@ -1,4 +1,4 @@
-for i = 1, NumberOfData do
+for i = 1, table.getn(DataModuleArray) do
 	local remaining, used, total = file.fsinfo()
 	local Module = require (DataModuleArray[i])
 	print ("Loaded Module: "..DataModuleArray[i])
