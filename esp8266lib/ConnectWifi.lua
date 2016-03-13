@@ -1,7 +1,7 @@
 print("set up wifi mode\n")
 wifi.setmode(wifi.STATION)
 wifi.sta.config(SSID, Pass)
-if TimeOut then 
+if TimeOut then --TimeOut Function
 	tmr.alarm(1,TimeOut,0,function() 
 		tmr.stop(0)
 		wifi.sta.disconnect()
@@ -20,7 +20,7 @@ tmr.alarm(0, 1000, 1, function()
 		tmr.stop(1)
 		print ("Connection Complete, IP is \n"..wifi.sta.getip())
 		print ("ConnectionSuccessful")
-		tmr.alarm(0, UploadInterval, 1, function()
+		tmr.alarm(0, UploadInterval, 1, function() -- Get data and send request every specific interval
 			dofile ("GetTimeToUpload.lua")
 		end)
     end

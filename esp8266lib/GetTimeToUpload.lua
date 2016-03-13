@@ -7,7 +7,7 @@ conn:send("HEAD / HTTP/1.1\r\n"..
 	"\r\n\r\n") 
 end)            
 conn:on("receive", function(conn, payload)
-	GoogleTime = string.sub(payload,string.find(payload,"Date: ")+11,string.find(payload,"Date: ")+35)
+	GoogleTime = string.sub(payload,string.find(payload,"Date: ")+11,string.find(payload,"Date: ")+35) -- Extract Time from response
 	print ("Time: "..GoogleTime)
 	conn:close()
 	dofile ("DataCollectingLoop.lua")

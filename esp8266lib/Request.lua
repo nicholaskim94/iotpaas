@@ -1,7 +1,6 @@
 function urlparser(t) local result = "" for k,v in pairs(t) do result = result.."&"..k.."="..v end return string.sub(result, 2) end
 function jsonparser(t) local result = "{" for k,v in pairs(t) do result = result..'"'..k..'":"'..v..'",' end return (string.sub(result,0,-2)..'}') end
 function PostRequest(path, data)
-	print (jsonparser(data))
     return "POST /"..path.." HTTP/1.1\r\n"..
       Header..jsonparser(data).."/r/n/r/n"
 end

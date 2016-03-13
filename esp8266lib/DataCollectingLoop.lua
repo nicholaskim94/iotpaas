@@ -10,7 +10,7 @@ for i = 1, table.getn(DataModuleArray) do
     	DataContainer["unit"] = Module.Unit()
     	DataContainer["value"] = Value
     	dofile ("Request.lua")
-    elseif (remaining > 1024*10) then
+    elseif (remaining > 1024*10) then -- log when not connected to internet
     	file.open("data.txt", "a+")
 		file.writeline(GoogleTime..","..Module.SensorModel()..","..Module.SensorType()..","..Module.Unit()..","..Value)
 		file.flush()
