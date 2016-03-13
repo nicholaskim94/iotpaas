@@ -6,7 +6,6 @@ Host = node.chipid()  -- set Host
 IP = "" -- set your IP
 Path = "/post"
 ReqType = "POST"
-Location = nil
 UploadInterval = 10000 -- Unit: ms
 MuxSelPinArray = {0, 1, 2} --muxpin setting	0, 1, 2 for sel pin
 MuxEnablePin = 3 --muxpin enable pin setting
