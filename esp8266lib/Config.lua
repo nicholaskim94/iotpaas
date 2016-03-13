@@ -1,10 +1,9 @@
 --GLOBAL VARIABLE
-SSID = "dongap" --Put Your Wifi SSID on Here!
-Pass = "47984810" --Put Your Wifi Password on Here!
-GoogleGeoLocationAPI = "" --your google api key
+SSID = "SSID" --Put Your Wifi SSID on Here!
+Pass = "PASSWORD" --Put Your Wifi Password on Here!
 TimeOut = 10000 --Connection Closed after Timor, Put Nil to Run 'connect_wifi.lua' until Wifi Connected!
-Host = "NodeMCU01"  -- set Host
-IP = "54.175.219.8"
+Host = node.chipid()  -- set Host
+IP = "" -- set your IP
 Path = "/post"
 ReqType = "POST"
 Location = nil
@@ -18,7 +17,6 @@ end
 NumberOfData = 1 -- numbers to collect data from mux or serial communication
 DataModuleArray = {"TempSensor", "HumiditySensor", "GasSensor"}
 Header = "Host: "..Host.."\r\n"..
-		"Connection: Keep-Alive\r\n"..
 		"Authorization: \r\n"..
 		"Content-Type: application/json\r\n"
 DataContainer = {
