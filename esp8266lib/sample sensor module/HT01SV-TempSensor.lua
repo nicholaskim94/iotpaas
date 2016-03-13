@@ -1,5 +1,9 @@
-module('TempSensor', package.seeall)
-function SensorModel() return "TQWQR1" end
+--Volatage input 3.3V
+local gpio = gpio
+local adc = adc
+local MuxSelPinArray = MuxSelPinArray
+module('TempSensor')
+function SensorModel() return "HT01SV" end
 function SensorType() return "TEMP" end
 function Unit() return "Cellcius" end
 function GetValue()
