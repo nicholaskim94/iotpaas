@@ -6,7 +6,20 @@ else
     Line = false
 end
 while Line do
-    DataContainer["time"],DataContainer["sensorModel"],DataContainer["sensorType"],DataContainer["unit"],DataContainer["value"] = Line:match("(.*),(.*),(.*),(.*),(.*)")
+    local ptmp
+    ptmp = Line.find(Line, ",")
+    DataContainer["time"] = Line:sub(1, ptmp - 1)
+    Line = Line.sub(Line, ptmp + 1)
+    ptmp = Line.find(Line, ",")
+    DataContainer["sensorModel"] = Line:sub(1, ptmp - 1)
+    Line = Line.sub(Line, ptmp + 1)
+    ptmp = Line.find(Line, ",")
+    DataContainer["sensorType"] = Line:sub(1, ptmp - 1)
+    Line = Line.sub(Line, ptmp + 1)
+    ptmp = Line.find(Line, ",")
+    DataContainer["unit"] = Line:sub(1, ptmp - 1)
+    Line = Line.sub(Line, ptmp + 1)
+    DataContainer["value"] = Line
     if wifi.sta.getip() ~= nil then
         dofile ("Request.lua")
         Line = file.readline()

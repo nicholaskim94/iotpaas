@@ -22,7 +22,7 @@ tmr.alarm(0, 1000, 1, function()
 		dofile ("LocationInit.lua")
 		print ("ConnectionSuccessful")
 		tmr.alarm(0, UploadInterval, 1, function()
-			dofile ("GetTimeToMux.lua")
+			dofile ("GetTimeToUpload.lua")
 		end)
     end
  end)

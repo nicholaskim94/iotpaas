@@ -1,6 +1,7 @@
 function urlparser(t) local result = "" for k,v in pairs(t) do result = result.."&"..k.."="..v end return string.sub(result, 2) end
 function jsonparser(t) local result = "{" for k,v in pairs(t) do result = result..'"'..k..'":"'..v..'",' end return (string.sub(result,0,-2)..'}') end
 function PostRequest(Host, path, data)
+	print (jsonparser(data))
     return "POST /"..path.." HTTP/1.1\r\n"..
       Header..jsonparser(data).."/r/n/r/n"
 end
@@ -11,7 +12,9 @@ conn=net.createConnection(net.TCP, 0)
 conn:on("receive", function(sck, pl) end)
 conn:connect(80, IP)
 if ReqType == "POST" then
-conn:send(PostRequest(node.chipid(),Path,DataContainer))
+	conn:send(PostRequest(node.chipid(),Path,DataContainer))
+elseif ReqType == "GET" then
+	conn:send(GetRequest(node.chipid(),Path,DataContainer))
 else
-conn:send(GetRequest(node.chipid(),Path,DataContainer))
+	print ("ReqType error")
 end
