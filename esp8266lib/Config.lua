@@ -17,9 +17,13 @@ if (MuxEnablePin) then
 	gpio.write(MuxEnablePin, gpio.LOW)
 end
 DataModuleArray = {"HT01SV-TempSensor"}
-Header = "Host: "..Host.."\r\n"..
-		"Authorization: \r\n"..
-		"Content-Type: application/json\r\n"
+ContentLength = "" --Request Header will automatically fill this
+function Header()
+    return "Host: "..Host.."\r\n"..
+            "Authorization: API_KEY\r\n"..
+            "Content-Type: application/x-www-form-urlencoded\r\n"..
+            "Content-Length: "..ContentLength.."\r\n"
+end
 DataContainer = {
     ["projectName"] = "hi",
     ["sensorModel"] = "TI000001",
